@@ -17,12 +17,18 @@ environment:
   DT_SQLITE_PATH: /data/donetick.db
   DT_ENV: selfhosted
 ports:
-  80/tcp: 8005
+  # Remove this to make the add-on more secure by not exposing ports.
+  # Ingress will still work.
   2021/tcp: 2021
+  # Must match the `listen` port in ingress.conf
+  # Default for an HA add-on that supports ingress is 8099.
+  8099/tcp: 8099
 webui: http://[HOST]:[PORT:2021]
 image: "ghcr.io/donetick/{arch}-hassio-addons"
 
-
+# Enable ingress to show DoneTick interface in Home Assistant sidebar
+# If you change 8099 port above to something else, then you need to add ingress_port here too.
+ingress: true
 
 options:
   telegram_token: ""
@@ -40,9 +46,8 @@ options:
   email_email: ""
   email_key: ""
   email_host: ""
-  email_port:	587
+  email_port: 587
   email_appHost: ""
-
 
 schema:
   telegram_token: "str?"
@@ -60,6 +65,5 @@ schema:
   email_email: "str?"
   email_key: "str?"
   email_host: "str?"
-  email_port:	"port"
+  email_port: "port"
   email_appHost: "str?"
-

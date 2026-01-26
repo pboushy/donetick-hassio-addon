@@ -3,7 +3,7 @@ FROM $BUILD_FROM
 
 WORKDIR /app
 
-RUN apk --no-cache add gcc musl-dev git sqlite-dev curl jq
+RUN apk --no-cache add gcc musl-dev git sqlite-dev curl jq nginx
 RUN mkdir -p /app/core
 
 # Determine the architecture and download the appropriate binary
@@ -20,12 +20,13 @@ RUN arch=$(uname -m) && \
     curl -fL "https://github.com/donetick/donetick/releases/download/${latest_release}/${binary}" | tar -xz -C /app/core
 
 # Copy entrypoint script
+COPY ingress.conf /etc/nginx/http.d/
 COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
-
 # Expose necessary ports
 EXPOSE 2021
+EXPOSE 8099
 
 # Set the entrypoint script
 CMD ["/app/entrypoint.sh"]
