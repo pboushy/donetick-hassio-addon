@@ -24,6 +24,7 @@ ports:
   # Default for an HA add-on that supports ingress is 8099.
   8099/tcp: 8099
 webui: http://[HOST]:[PORT:2021]
+# Comment out the image to test locally (DO NOT COMMIT)
 image: "ghcr.io/donetick/{arch}-hassio-addons"
 
 # Enable ingress to show DoneTick interface in Home Assistant sidebar
