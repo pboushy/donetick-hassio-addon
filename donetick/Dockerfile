@@ -23,7 +23,6 @@ RUN arch=$(uname -m) && \
 COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
-
 # Expose necessary ports
 EXPOSE 2021
 
