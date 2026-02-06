@@ -24,32 +24,32 @@ export DT_EMAIL_KEY=$(bashio::config 'email_key')
 export DT_EMAIL_EMAIL=$(bashio::config 'email_email')
 export DT_EMAIL_APP_HOST=$(bashio::config 'email_appHost')
 
-# Start donetick backend and save PID 
+# Start donetick backend and save PID
 bashio::log.info "Starting Donetick backend..."
 
 # Envirment variables:
 # export VITE_APP_API_URL=http://host.docker.internal:2021
 
 cd /app/core
-# Start donetick backend and save PID 
+# Start donetick backend and save PID
 export DT_ENV="selfhosted"
 
 ls -lR /app/
 ./donetick &
 PID1=$!
 
-
-
+nginx &
+PID2=$!
 
 cleanup() {
     echo "Terminating processes..."
-    kill $PID1 
+    kill $PID1 $PID2
 }
 
 # Trap SIGINT & SIGTERM to clean up before exiting
 trap cleanup SIGINT SIGTERM
 
 # Wait for both processes to exit
-wait $PID1  
+wait $PID1 $PID2
 
 echo "Both processes have completed."

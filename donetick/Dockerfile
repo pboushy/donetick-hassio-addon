@@ -3,7 +3,7 @@ FROM $BUILD_FROM
 
 WORKDIR /app
 
-RUN apk --no-cache add gcc musl-dev git sqlite-dev curl jq
+RUN apk --no-cache add gcc musl-dev git sqlite-dev curl jq nginx
 RUN mkdir -p /app/core
 
 # Determine the architecture and download the appropriate binary
@@ -20,6 +20,8 @@ RUN arch=$(uname -m) && \
     curl -fL "https://github.com/donetick/donetick/releases/download/${latest_release}/${binary}" | tar -xz -C /app/core
 
 # Copy entrypoint script
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY index.html /usr/share/nginx/html/
 COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 

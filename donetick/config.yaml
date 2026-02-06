@@ -17,13 +17,14 @@ environment:
   DT_SQLITE_PATH: /data/donetick.db
   DT_ENV: selfhosted
 ports:
-  80/tcp: 8005
+  # 80/tcp: 8005
   2021/tcp: 2021
 webui: http://[HOST]:[PORT:2021]
 # Comment out the image to test locally (DO NOT COMMIT)
-image: "ghcr.io/donetick/{arch}-hassio-addons"
+# image: "ghcr.io/donetick/{arch}-hassio-addons"
 
-
+ingress: true
+ingress_port: 80 # this needs to match the listen port in nginx.conf
 
 options:
   telegram_token: ""
@@ -38,12 +39,11 @@ options:
   oauth2_user_info_url: ""
   oauth2_name: ""
   jwt_secret: ""
-  email_email: ""	
+  email_email: ""
   email_key: ""
   email_host: ""
-  email_port:	""
+  email_port: ""
   email_appHost: ""
-
 
 schema:
   telegram_token: "str?"
@@ -58,9 +58,8 @@ schema:
   oauth2_user_info_url: "str?"
   oauth2_name: "str?"
   jwt_secret: "str?"
-  email_email: "str?"	
+  email_email: "str?"
   email_key: "str?"
   email_host: "str?"
-  email_port:	"int?"
+  email_port: "int?"
   email_appHost: "str?"
-
